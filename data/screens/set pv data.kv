@@ -18,7 +18,7 @@ ShowcaseScreen:
         size_hint_y: None
         height: '36dp'
         text: 'Read Temperature'
-        on_release: temp_label.text = app.get_analog_val()
+        on_release: temp_label.text = str(app.get_analog_val())
 
     Label:
         id: temp_label
