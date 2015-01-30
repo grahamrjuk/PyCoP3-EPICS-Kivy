@@ -1,0 +1,42 @@
+record(bo,"$(P)ON_OFF:SP")
+{
+    field(DTYP,"Soft Channel")
+	field(VAL, "0")
+	field(FLNK, "$(P)ON_OFF")
+}
+
+record(bi, "$(P)ON_OFF")
+{
+    field(DTYP,"Soft Channel")
+	field(ZNAM, "0")
+	field(ONAM, "1")
+	field(INP, "$(P)ON_OFF:SP")
+	field(SCAN, ".1 second")
+}
+
+record(ao,"$(P)ANALOG:SP")
+{
+    field(DTYP,"Soft Channel")
+	field(VAL, "2.1")
+	field(FLNK, "$(P)ANALOG")
+}
+
+record(ai, "$(P)ANALOG")
+{
+    field(DTYP,"Soft Channel")
+	field(INP, "$(P)ANALOG:SP")
+	field(SCAN, ".1 second")
+}
+
+record(waveform, "$(P)STRING")
+{
+    field(DTYP,"Soft Channel")
+    field(NELM,"16000")
+    field(FTVL,"CHAR")
+}
+
+record(waveform,"$(P)PICTURE")  {
+    field(DTYP,"Soft Channel")
+    field(NELM,"16000")
+    field(FTVL,"BYTE")
+ }

@@ -35,7 +35,7 @@ class ImageStream(Widget):
         self.ca_name = ca_name
         self.ca = None
         if ChannelAccessWrapper:
-            self.ca = ChannelAccessWrapper()
+            self.ca = ChannelAccessWrapper(False)
         self.test = test
 
     def set_new_data(self, dt=1):
