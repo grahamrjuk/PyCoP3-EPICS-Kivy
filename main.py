@@ -9,6 +9,7 @@ from kivy.clock import Clock
 from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen
 
+from channel_access.channel_access_wrapper import ChannelAccessWrapper as CAWrapper
 
 class ShowcaseScreen(Screen):
     fullscreen = BooleanProperty(False)
@@ -18,9 +19,9 @@ class ShowcaseScreen(Screen):
             return self.ids.content.add_widget(*args)
         return super(ShowcaseScreen, self).add_widget(*args)
 
-
 class ShowcaseApp(App):
 
+    ca_wrapper = CAWrapper()
     index = NumericProperty(-1)
     current_title = StringProperty()
     time = NumericProperty(0)
@@ -44,6 +45,15 @@ class ShowcaseApp(App):
         self.available_screens = [join(curdir, 'data', 'screens',
             '{}.kv'.format(fn)) for fn in self.available_screens]
         self.go_next_screen()
+
+    # Here are some EPICS related things
+    def set_analog_val(self, value):
+        self.ca_wrapper.set_pv_value("ANALOG", value)
+
+    def get_analog_val(self):
+        return self.ca_wrapper.get_pv_value("ANALOG")
+
+
 
     def on_pause(self):
         return True
