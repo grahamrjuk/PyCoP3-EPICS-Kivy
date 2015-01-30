@@ -1,0 +1,18 @@
+ShowcaseScreen:
+	name: 'Set PV data'
+
+	Button:
+		size_hint_y: None
+		height: '36dp'
+		text: 'Set Temperature'
+
+    CTextInput
+        size_hint_y: None
+        height: '36dp'
+        multiline: False
+        text: 'PV value'
+
+<CTextInput@TextInput>
+    on_focus:
+        screen = self.parent.parent.parent.parent
+        if screen.parent: screen.focused = self
