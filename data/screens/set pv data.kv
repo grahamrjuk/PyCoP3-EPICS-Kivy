@@ -5,8 +5,10 @@ ShowcaseScreen:
 		size_hint_y: None
 		height: '36dp'
 		text: 'Set Temperature'
+		on_release: app.set_analog_val(set_tmp_input.text)
 
     CTextInput
+        id: 'set_temp_input'
         size_hint_y: None
         height: '36dp'
         multiline: False
