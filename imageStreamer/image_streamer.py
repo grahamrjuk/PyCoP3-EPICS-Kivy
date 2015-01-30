@@ -1,10 +1,16 @@
+# Receive data from the PICTURE PV in through the ChannelAccessWrapper
+
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.clock import Clock
 from kivy.graphics import Rectangle
 from kivy.graphics.texture import Texture
 
-from channel_access.channel_access_wrapper import ChannelAccessWrapper
+try:
+    from channel_access.channel_access_wrapper import ChannelAccessWrapper
+except:
+    ChannelAccessWrapper = None
+    print('No ChannelAccessWrapper')
 
 from random import randint
 
@@ -25,23 +31,35 @@ buffer = b''.join(map(chr, buf))
 
 class ImageStream(Widget):
 
-    def set_ca_name(self, ca_name):
+    def set_ca_name(self, ca_name, test=False):
         self.ca_name = ca_name
-        self.ca = ChannelAccessWrapper()
+        self.ca = None
+        if ChannelAccessWrapper:
+            self.ca = ChannelAccessWrapper()
+        self.test = test
 
-    def set_texture(self, buf):
+    def set_new_data(self, dt=1):
         # then blit the buffer
-        texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
-
-    def update(self, dt):
-        print('Getting PV value')
-        new_data = self.ca.get_pv_value(self.ca_name)
-
-        #print('Inventing new data')
         buf = [int(x * randint(0,255) / size) for x in range(size)]
         # then, convert the array to a ubyte string
         new_data = b''.join(map(chr, buf))
-        #print('Invented data')
+        if self.ca:
+            self.ca.set_pv_value(self.ca_name, new_data)
+
+    def set_texture(self, buf):
+        # then blit the buffer
+        if buf is not None:
+            texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
+
+    def update(self, dt):
+        # doing this for testing - some other part of the app
+        # should be putting the data in the Channel
+        if self.test:
+            self.set_new_data()
+
+        new_data = None
+        if self.ca:
+            new_data = self.ca.get_pv_value(self.ca_name)
 
         self.set_texture(new_data)
 
@@ -52,9 +70,9 @@ class ImageStream(Widget):
 class IstreamApp(App):
     def build(self):
         is_widget = ImageStream()
-        is_widget.set_ca_name('PICTURE')
-        is_widget.set_texture(buffer)
+        is_widget.set_ca_name('PICTURE', True)
         Clock.schedule_interval(is_widget.update, 1.0 / 60.0)
+        Clock.schedule_interval(is_widget.set_new_data, 1.0 / 4.0)
         return is_widget
 
 
