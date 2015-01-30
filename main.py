@@ -30,11 +30,11 @@ class ShowcaseApp(App):
     higherarchy = ListProperty([])
 
     def build(self):
-        self.title = 'hello world'
+        self.title = 'EPICS Controls in Kivy'
         Clock.schedule_interval(self._update_clock, 1 / 60.)
         self.screens = {}
         self.available_screens = sorted([
-            'Set PV data', 'ToggleButton', 'Sliders', 'ProgressBar', 'Switches',
+            'Set PV data', 'ToggleButton', 'ASliders', 'ProgressBar', 'Switches',
             'CheckBoxes', 'TextInputs', 'Accordions', 'FileChoosers',
             'Carousel', 'Bubbles', 'CodeInput', 'DropDown', 'Spinner',
             'Scatter', 'Splitter', 'TabbedPanel + Layouts', 'RstDocument',
