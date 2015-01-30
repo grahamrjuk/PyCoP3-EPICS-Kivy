@@ -21,7 +21,7 @@ class ShowcaseScreen(Screen):
 
 class ShowcaseApp(App):
 
-    ca_wrapper = CAWrapper()
+    ca_wrapper = CAWrapper(False)
     index = NumericProperty(-1)
     current_title = StringProperty()
     time = NumericProperty(0)
@@ -48,7 +48,7 @@ class ShowcaseApp(App):
 
     # Here are some EPICS related things
     def set_analog_val(self, value):
-        self.ca_wrapper.set_pv_value("ANALOG", str(value))
+        self.ca_wrapper.set_pv_value("ANALOG:SP", str(value))
 
     def get_analog_val(self):
         result = self.ca_wrapper.get_pv_value("ANALOG")
