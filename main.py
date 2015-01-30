@@ -48,10 +48,11 @@ class ShowcaseApp(App):
 
     # Here are some EPICS related things
     def set_analog_val(self, value):
-        self.ca_wrapper.set_pv_value("ANALOG", value)
+        self.ca_wrapper.set_pv_value("ANALOG", str(value))
 
     def get_analog_val(self):
-        return self.ca_wrapper.get_pv_value("ANALOG")
+        result = self.ca_wrapper.get_pv_value("ANALOG")
+        return result if result else "This logic stops it from crashing, yay!"
 
 
 
