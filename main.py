@@ -8,7 +8,7 @@ from kivy.uix.label import Label
 class KivyEpicsApp(App):
 
     def build(self):
-        return Label(text='Hello Epics from Kivy')
+        return Label(text='Hello Epics from Kivy ')
 
 
 if __name__ == '__main__':
