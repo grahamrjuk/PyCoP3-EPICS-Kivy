@@ -9,7 +9,7 @@ from kivy.clock import Clock
 from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen
 
-from channel_access import channel_access_wrapper as cawrap
+from channel_access.channel_access_wrapper import ChannelAccessWrapper as CAWrapper
 
 class ShowcaseScreen(Screen):
     fullscreen = BooleanProperty(False)
@@ -21,7 +21,7 @@ class ShowcaseScreen(Screen):
 
 class ShowcaseApp(App):
 
-    ca_wrapper = cawrap()
+    ca_wrapper = CAWrapper()
     index = NumericProperty(-1)
     current_title = StringProperty()
     time = NumericProperty(0)
@@ -51,7 +51,7 @@ class ShowcaseApp(App):
         self.ca_wrapper.set_pv_value("ANALOG", value)
 
     def get_analog_val(self):
-        self.ca_wrapper.get_pv_value("ANALOG")
+        return self.ca_wrapper.get_pv_value("ANALOG")
 
 
 
